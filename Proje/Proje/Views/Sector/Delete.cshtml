@@ -1,0 +1,42 @@
+﻿@model Proje.Models.SectorViewModel
+
+@{
+    ViewData["Title"] = "Delete Sector";
+    var errormessage = TempData["Error Message"]?.ToString();
+}
+<h3>@ViewData["Title"]</h3>
+<hr />
+@if (!string.IsNullOrWhiteSpace(errormessage))
+{
+    <div class="alert alert-danger">
+        <strong>Error!</strong>@errormessage
+    </div>
+    <button type="button" class="btn-close float-end" data-bs-dismiss="alert">  </button>
+}
+<form action="Delete" method="post" autocomplete="off">
+    <div class="mb-3">
+        <label class="form-label">Id</label>
+        <input type="text" class="form-control" asp-for="SectorID" readonly />
+    </div>
+
+    <div class=" mb-3">
+        <label class="form-label">Sector Name</label>
+        <input type="text" class="form-control" asp-for="SectorName" readonly />
+
+    </div>
+
+    <div class=" mb-3">
+        <label class="form-label">Sector Is Active</label>
+        <input type="text" class="form-control" asp-for="SectorIsActive" readonly />
+
+    </div>
+
+
+    <div class="d-grid">
+        <button type="submit" class=" btn btn-danger" onclik="return function('Are you sure delete company  :
+        @Model.SectorName')">
+            Delete
+        </button>
+    </div>
+
+</form>

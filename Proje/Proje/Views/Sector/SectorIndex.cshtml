@@ -1,0 +1,73 @@
+﻿@model List<Proje.Models.SectorViewModel>
+
+@{
+    ViewData["Title"] = "Sector List";
+    var succedmessage = TempData["Success Message"]?.ToString();
+    var errormessage = TempData["Error Message"]?.ToString();
+}
+<h3>@ViewData["Title"]</h3>
+<hr />
+@if (!string.IsNullOrWhiteSpace(succedmessage))
+{
+    <div class="alert alert-succes">
+        <strong>Success! </strong>@succedmessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert">  </button>
+    </div>
+
+}
+else if (!string.IsNullOrWhiteSpace(errormessage))
+{
+    <div class="alert alert-danger">
+        <strong>Error! </strong>@errormessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert">  </button>
+    </div>
+
+}
+
+
+<form>
+    <button asp-action="add" asp-controller="Sector" class="btn btn-primary">Add Sector</button>
+    <table class="table table-responsive table-hover table-bordered ">
+        <thead>
+            <tr class="table-active">
+                
+                <th class="text-center">ID</th>
+                <th class="text-center">Sector Name</th>
+                <th class="text-center">Is Active</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var sector in Model)
+                {
+                    <tr>
+                        <td class="text-center">@sector.SectorID</td>
+                        <td class>@sector.SectorName</td>
+                        <td class="text-center">@sector.SectorIsActive</td>
+
+
+                        <td class="text-center">
+                            <div class="btn btn-group-sm ">
+                                <a asp-controller="Sector" asp-action="Edit" asp-route-id="@sector.SectorID" class="btn btn-primary ">Edit</a>
+                                <a asp-controller="Sector" asp-action="Delete" asp-route-id="@sector.SectorID" class="btn btn-danger">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6">
+                        <div>
+                            NO SECTOR AVAILABLEN AT THIS MOMENT!
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+</form>

@@ -1,0 +1,80 @@
+﻿@model List<Proje.Models.CompanyViewModel>
+
+@{
+
+    ViewData["Title"] = "Company List";
+    var succedmessage = TempData["Success Message"]?.ToString();
+    var errormessage = TempData["Error Message"]?.ToString();
+}
+
+<h3>@ViewData["Title"]</h3>
+<hr />
+@if (!string.IsNullOrWhiteSpace(succedmessage))
+{
+    <div class="alert alert-succes">
+        <strong>Success! </strong>@succedmessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert">  </button>
+    </div>
+    
+}
+else if (!string.IsNullOrWhiteSpace(errormessage))
+{
+    <div class="alert alert-danger">
+        <strong>Error! </strong>@errormessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert">  </button>
+    </div>
+    
+}
+<form>
+    <button asp-action="Add" asp-controller="Company" class="btn btn-primary">Add Company</button>
+    <table class="table table-responsive table-hover table-bordered">
+        <thead>
+            <tr class="table-active">
+                <th class=" text-center">ID</th>
+                <th class=" text-center">Company Name</th>
+                <th class=" text-center">Company Status</th>
+                <th class=" text-center">Sector</th>
+                <th class=" text-center">Integrator</th>
+                <th class=" text-center">Contract Start</th>
+                <th class=" text-center">Contract End</th>
+                <th class=" text-center">Authorized</th>
+                <th class=" text-center">Action</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+             @if(Model != null && Model.Any())
+            {
+                @foreach (var companies in Model)
+                {
+                    <tr>
+                        <td><a href="Company/@companies.Id">@companies.Id</a></td>
+
+                        <td class=" text-center">@companies.CompanyName</td>
+                        <td class=" text-center">@companies.CompanyStatus</td>
+                        <td class=" text-center">@companies.SectorID</td>
+                        <td class=" text-center">@companies.EntegrationID</td>
+                        <td class=" text-center">@companies.Contract_Start.ToString()</td>
+                        <td class=" text-center">@companies.Contract_End</td>
+                        <td class=" text-center">@companies.Authorized</td>
+                        <td>
+                            <div class="btn btn-group-sm ">
+                                <a asp-controller="Company" asp-action="Edit" asp-route-id="@companies.Id" class="btn btn-primary ">Edit</a>
+                                <a asp-controller="Company" asp-action="Delete" asp-route-id="@companies.Id" class="btn btn-danger">Delete</a>
+                                </div>
+                        </td>
+                </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6">
+                        <div>
+                            NO COMPANY AVAILABLEN AT THIS MOMENT!
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
